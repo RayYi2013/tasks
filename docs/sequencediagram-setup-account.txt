@@ -1,0 +1,68 @@
+original sequence:
+title setup account
+
+participant Browser as br
+participant "nodejs Server" as node
+participant "users controller" as uc
+participant "passportjs middleware" as pp
+participant  "users model\non MongoDB" as um
+
+br->node: email, password\npost to /api/users
+activate br
+activate node
+node->uc: email, password\npost(users.create)
+deactivate node
+activate uc
+uc->um:email, password\nto createAccount
+activate um
+um-->uc:user info
+deactivate um
+uc->pp:email, password\n to login
+activate pp
+pp->pp: save user.id\n into session
+pp-->uc:done
+deactivate pp
+uc-->node:user info
+deactivate uc
+node-->br:user info\nuser.id in cookie
+deactivate node
+
+improved sequence:
+
+title setup account
+
+participant Browser as br
+participant "nodejs Server" as node
+participant "users controller" as uc
+participant "passportjs middleware" as pp
+participant  "account manager" as am
+participant  "users model\non MongoDB" as um
+
+br->node: email, password\npost to /api/users
+activate br
+activate node
+node->uc: email, password\npost(users.create)
+deactivate node
+activate uc
+uc->am:email, password\nto createAccount
+activate am
+am->um:email, password
+activate um
+um-->am:user info
+deactivate um
+am-->uc: user info
+deactivate am
+uc->pp:email, password\n to login
+activate pp
+pp->am:user.id\nget token
+activate am
+am->am:create token \nwith expire time
+am-->pp:token
+deactivate am
+pp->pp: save token\n into session
+pp-->uc:done
+deactivate pp
+uc-->node:user info
+deactivate uc
+node-->br:user info\ntoken in cookie
+deactivate node

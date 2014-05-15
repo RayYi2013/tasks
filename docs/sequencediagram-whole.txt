@@ -1,0 +1,112 @@
+title setup-login-api request
+
+participant Browser as br
+participant "nodejs Server" as node
+participant "users controller" as uc
+participant "session controller" as sc
+participant "api controller" as ac
+participant "passportjs middleware" as pp
+participant  "account manager" as am
+participant  "users model\non MongoDB" as um
+
+note over br,um: setup
+br->node: email, password\npost to /api/users
+activate br
+activate node
+node->uc: email, password\npost(users.create)
+deactivate node
+activate uc
+uc->am:email, password\nto createAccount
+activate am
+am->um:email, password
+activate um
+um-->am:user info
+deactivate um
+am-->uc: user info
+deactivate am
+uc->pp:email, password\n to login
+activate pp
+pp->am:user.id\nget token
+activate am
+am->am:create token \nwith expire time
+am-->pp:token
+deactivate am
+pp->pp: save token\n into session
+pp-->uc:done
+deactivate pp
+uc-->node:user info
+deactivate uc
+node-->br:user info\ncookie
+deactivate node
+deactivate br
+
+
+note over br,um: login
+
+br->node: email, password\npost to /api/session
+activate br
+activate node
+node->sc: email, password\npost(session.login)
+deactivate node
+activate sc
+sc->pp:email, password\nto authenticate
+deactivate sc
+activate pp
+pp->am:email, password\nto validate
+activate am
+deactivate pp
+am->um:email, password
+activate um
+um-->am:user info
+deactivate um
+am-->pp: user info
+deactivate am
+activate pp
+pp->am:user.id/nget token
+activate am
+am-->pp:token
+deactivate am
+pp->pp:save token\nto session
+pp-->sc:user info
+deactivate pp
+activate sc
+sc->node:user info
+activate node
+deactivate sc
+node-->br:user info\ncookie
+deactivate node
+deactivate br
+
+
+note over br, um: api request
+br->node:request\nwith cookie
+activate br
+activate node
+node->node:get session\nfrom cookie
+node->pp:token in session
+activate pp
+deactivate node
+pp->am:token\nto validate
+activate am
+deactivate pp
+am->am:validate token
+am-->pp:user info
+deactivate am
+activate pp
+pp->am:user.id/nget token
+activate am
+am-->pp:token
+deactivate am
+pp->pp:save token\nto session
+pp-->node:user info
+deactivate pp
+activate node
+node ->ac:user info\nrequest
+activate ac
+ac->ac:do something
+ac->node:response
+deactivate ac
+node-->br:response\ncookie
+deactivate node
+deactivate br
+

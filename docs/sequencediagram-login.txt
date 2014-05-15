@@ -1,0 +1,39 @@
+title login
+
+participant Browser as br
+participant "nodejs Server" as node
+participant "session controller" as sc
+participant "passportjs middleware" as pp
+participant  "account manager" as am
+participant  "users model\non MongoDB" as um
+
+br->node: email, password\npost to /api/session
+activate br
+activate node
+node->sc: email, password\npost(session.login)
+deactivate node
+activate sc
+sc->pp:email, password\nto authenticate
+deactivate sc
+activate pp
+pp->am:email, password\nto validate
+activate am
+deactivate pp
+am->um:email, password
+activate um
+um-->am:user info
+deactivate um
+am-->pp: user info
+activate pp
+pp->am:user.id/nget token
+am-->pp:token
+deactivate am
+pp->pp:save token\nto session
+pp-->sc:user info
+deactivate pp
+activate sc
+sc->node:user info
+activate node
+deactivate sc
+node-->br:user info\ntoken in cookie
+deactivate node

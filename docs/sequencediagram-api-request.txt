@@ -1,0 +1,42 @@
+title api request
+
+participant Browser as br
+participant "nodejs Server" as node
+participant "users controller" as uc
+participant "session controller" as sc
+participant "api controller" as ac
+participant "passportjs middleware" as pp
+participant  "account manager" as am
+participant  "users model\non MongoDB" as um
+
+
+br->node:request\ntoken in cookie
+activate br
+activate node
+node->pp:token in cookie
+activate pp
+deactivate node
+pp->am:token\nto validate
+activate am
+deactivate pp
+am->am:validate token
+am-->pp:user info
+deactivate am
+activate pp
+pp->am:user.id/nget token
+activate am
+am-->pp:token
+deactivate am
+pp->pp:save token\nto session
+pp-->node:user info
+deactivate pp
+activate node
+node ->ac:user info\nrequest
+activate ac
+ac->ac:do something
+ac->node:response
+deactivate ac
+node-->br:response\ntoken in cookie
+deactivate node
+deactivate br
+
