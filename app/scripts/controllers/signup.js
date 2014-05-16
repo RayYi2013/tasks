@@ -16,7 +16,7 @@ angular.module('tasksApp')
         })
         .then( function() {
           // Account created, redirect to home
-          $location.path('/');
+          $location.path('workspace');
         })
         .catch( function(err) {
           err = err.data;
