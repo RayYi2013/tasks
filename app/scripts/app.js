@@ -4,55 +4,64 @@ angular.module('tasksApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ui.router'
 ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
-    $routeProvider
-      .when('/', {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+        // For any unmatched url, redirect to /state1
+        $urlRouterProvider.otherwise("/");
+
+        $stateProvider
+      .state('main', {
+                url:'/',
         templateUrl: 'partials/main',
         controller: 'MainCtrl'
       })
-      .when('/login', {
+      .state('login', {
+                url:'/login',
         templateUrl: 'partials/login',
         controller: 'LoginCtrl'
       })
-      .when('/signup', {
+      .state('signup', {
+                url:'/signup',
         templateUrl: 'partials/signup',
         controller: 'SignupCtrl'
       })
-      .when('/settings', {
+        .state('workspace', {
+            url:'/workspace',
+            templateUrl: 'partials/workspace',
+            controller: 'SignupCtrl'
+        })
+      .state('settings', {
+                url:'/settings',
         templateUrl: 'partials/settings',
         controller: 'SettingsCtrl',
         authenticate: true
-      })
-      .otherwise({
-        redirectTo: '/'
       });
       
     $locationProvider.html5Mode(true);
       
-    // Intercept 401s and redirect you to login
-    $httpProvider.interceptors.push(['$q', '$location', function($q, $location) {
-      return {
-        'responseError': function(response) {
-          if(response.status === 401) {
-            $location.path('/login');
-            return $q.reject(response);
-          }
-          else {
-            return $q.reject(response);
-          }
-        }
-      };
-    }]);
   })
-  .run(function ($rootScope, $location, Auth) {
+    .run(function ($rootScope, $state, $stateParams, Auth) {
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+        // Redirect to login if route requires auth and you're not logged in
+        $rootScope.$on('$stateChangeStart',
+            function(event, toState, toParams, fromState, fromParams){
+                if (toState.authenticate && !Auth.isLoggedIn()) {
+                    $state.go('/login');
+                }
+            });
 
-    // Redirect to login if route requires auth and you're not logged in
-    $rootScope.$on('$routeChangeStart', function (event, next) {
-      
-      if (next.authenticate && !Auth.isLoggedIn()) {
-        $location.path('/login');
-      }
+        // Intercept 401s and redirect you to login
+        $rootScope.$on('$stateChangeError',
+            function(event, toState, toParams, fromState, fromParams, error){
+                console.log('stateChangeError');
+                console.log(toState, toParams, fromState, fromParams, error);
+
+                if(error.status == 401){
+                    console.log("401 detected. Redirecting...");
+
+                    $state.go("login");
+                }
+            });
     });
-  });

@@ -1,11 +1,32 @@
-<div class="header" ng-controller="NavbarCtrl">
-  <ul class="nav nav-pills pull-right">
-    <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
-        <a ng-href="{{item.link}}">{{item.title}}</a>
-    </li>
-    <li ng-hide="currentUser" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
-    <li ng-hide="currentUser" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
-    <li ng-show="currentUser" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
-  </ul>
-  <h3 class="text-muted">tasks</h3>
+<div class="header navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavbarCtrl">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Tasks</a>
+        </div>
+
+        <div  class="navbar-collapse collapse pull-right">
+            <ul class="nav nav-pills pull-right " >
+                <li ng-repeat="item in menu" ng-class="{active: $state.includes(item.link)}" ng-show="currentUser">
+                    <a ng-href="{{item.link}}">{{item.title}}</a>
+                </li>
+                <li ng-show="currentUser" ng-class="{active:  $state.includes('logout')}"><a href="" ng-click="logout()">Logout</a></li>
+                <li ng-hide="currentUser" ng-class="{active: $state.includes('signup')}"><a href="/signup">Sign up</a></li>
+            </ul>
+            <form  name="loginform" ng-hide="currentUser"  class="navbar-form navbar-right" role="form" ng-submit="login(loginform)" novalidate>
+                <div class="form-group">
+                    <input type="email" placeholder="Email" class="form-control" ng-model="user.email">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password" class="form-control" ng-model="user.password">
+                </div>
+                <button type="submit" class="btn btn-success">Sign in</button>
+            </form>
+        </div><!--/.navbar-collapse -->
+    </div>
 </div>
