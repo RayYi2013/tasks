@@ -26,13 +26,10 @@ fs.readdirSync(modelsPath).forEach(function (file) {
 // Populate empty DB with sample data
 //require('./lib/config/dummydata');
 
-// Passport Configuration
-var passport = require('./lib/config/passport');
-
 // Setup Express
 var app = express();
+app.config = config;
 require('./lib/config/express')(app);
-require('./lib/routes')(app);
 
 // Start server
 app.listen(config.port, config.ip, function () {
