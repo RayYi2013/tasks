@@ -106,6 +106,6 @@ angular.module('tasksApp')
       isLoggedIn: function() {
         var user = $rootScope.currentUser;
         return !!user;
-      },
+      }
     };
   });
