@@ -1,11 +1,17 @@
-title login
+title login request
 
 participant Browser as br
-participant "nodejs Server" as node
-participant "session controller" as sc
-participant "passportjs middleware" as pp
-participant  "account manager" as am
-participant  "users model\non MongoDB" as um
+participant "nodejs\nServer" as node
+participant "users\ncontroller" as uc
+participant "session\ncontroller" as sc
+participant "api\ncontroller" as ac
+participant  "account\nmanager" as am
+participant  "user model\non MongoDB" as um
+participant  "token model\non MongoDB" as tm
+participant "Sling server" as sling
+
+
+note over br,sling: login
 
 br->node: email, password\npost to /api/session
 activate br
@@ -13,27 +19,26 @@ activate node
 node->sc: email, password\npost(session.login)
 deactivate node
 activate sc
-sc->pp:email, password\nto authenticate
+sc->am:email, password\nto authenticate
 deactivate sc
-activate pp
-pp->am:email, password\nto validate
 activate am
-deactivate pp
 am->um:email, password
 activate um
 um-->am:user info
 deactivate um
-am-->pp: user info
-activate pp
-pp->am:user.id/nget token
-am-->pp:token
+am->am:create token\nwith expire-time
+am->sling:sling.id from user info\nrequest token
+activate sling
+sling-->am:sling.token
+deactivate sling
+am->tm:prime-token,expire-time,sling.token\nsave
+activate tm
+tm-->am:done
+deactivate tm
+am-->uc:user info with prime-token
 deactivate am
-pp->pp:save token\nto session
-pp-->sc:user info
-deactivate pp
-activate sc
-sc->node:user info
-activate node
-deactivate sc
-node-->br:user info\ntoken in cookie
+uc-->node:user info\nprime-token
+deactivate uc
+node-->br:user info\nprime-token
 deactivate node
+deactivate br

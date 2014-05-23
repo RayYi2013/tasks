@@ -1,0 +1,40 @@
+title logout request
+
+participant Browser as br
+participant "nodejs\nServer" as node
+participant "users\ncontroller" as uc
+participant "session\ncontroller" as sc
+participant "api\ncontroller" as ac
+participant  "account\nmanager" as am
+participant  "user model\non MongoDB" as um
+participant  "token model\non MongoDB" as tm
+participant "Sling server" as sling
+
+
+note over br,sling: logout
+
+br->node: token \nin header
+activate br
+activate node
+node->sc: token\ndelete(session.logout)
+deactivate node
+activate sc
+sc->am:token\nto delete
+deactivate sc
+activate am
+am->tm:prime-token\nto delete
+activate tm
+tm-->am:deleted token info\nwith sling.token
+deactivate tm
+am->sling:sling.token\nto logout
+activate sling
+sling-->am:done
+deactivate sling
+am-->sc:done
+activate sc
+deactivate am
+sc-->node:done
+deactivate sc
+node-->br:done
+deactivate node
+deactivate br

@@ -1,43 +1,16 @@
-original sequence:
-title setup account
+title setup request
 
 participant Browser as br
-participant "nodejs Server" as node
-participant "users controller" as uc
-participant "passportjs middleware" as pp
-participant  "users model\non MongoDB" as um
+participant "nodejs\nServer" as node
+participant "users\ncontroller" as uc
+participant "session\ncontroller" as sc
+participant "api\ncontroller" as ac
+participant  "account\nmanager" as am
+participant  "user model\non MongoDB" as um
+participant  "token model\non MongoDB" as tm
+participant "Sling server" as sling
 
-br->node: email, password\npost to /api/users
-activate br
-activate node
-node->uc: email, password\npost(users.create)
-deactivate node
-activate uc
-uc->um:email, password\nto createAccount
-activate um
-um-->uc:user info
-deactivate um
-uc->pp:email, password\n to login
-activate pp
-pp->pp: save user.id\n into session
-pp-->uc:done
-deactivate pp
-uc-->node:user info
-deactivate uc
-node-->br:user info\nuser.id in cookie
-deactivate node
-
-improved sequence:
-
-title setup account
-
-participant Browser as br
-participant "nodejs Server" as node
-participant "users controller" as uc
-participant "passportjs middleware" as pp
-participant  "account manager" as am
-participant  "users model\non MongoDB" as um
-
+note over br,sling: setup
 br->node: email, password\npost to /api/users
 activate br
 activate node
@@ -46,23 +19,31 @@ deactivate node
 activate uc
 uc->am:email, password\nto createAccount
 activate am
-am->um:email, password
+am->sling:email
+activate sling
+sling-->am:sling.id
+deactivate sling
+am->um:email, password\nsling.id
 activate um
 um-->am:user info
 deactivate um
 am-->uc: user info
 deactivate am
-uc->pp:email, password\n to login
-activate pp
-pp->am:user.id\nget token
+uc->am:user info
 activate am
-am->am:create token \nwith expire time
-am-->pp:token
+am->am:create token\nwith expire-time
+am->sling:sling.id from user info\nrequest token
+activate sling
+sling-->am:sling.token
+deactivate sling
+am->tm:prime-token,expire-time,sling.token\nsave
+activate tm
+tm-->am:done
+deactivate tm
+am-->uc:user info with prime-token
 deactivate am
-pp->pp: save token\n into session
-pp-->uc:done
-deactivate pp
-uc-->node:user info
+uc-->node:user info\nprime-token
 deactivate uc
-node-->br:user info\ntoken in cookie
+node-->br:user info\nprime-token
 deactivate node
+deactivate br
