@@ -3,8 +3,6 @@ title api request
 participant Browser as br
 participant "nodejs\nServer" as node
 participant "authenticate\nmiddleware" as auth
-participant "users\ncontroller" as uc
-participant "session\ncontroller" as sc
 participant "api\ncontroller" as api
 participant  "account\nmanager" as am
 participant  "user model\non MongoDB" as um
@@ -12,29 +10,47 @@ participant  "token model\non MongoDB" as tm
 participant "Sling server" as sling
 
 
-note over br, sling: api request
 br->node:request\nwith cookie
 activate br
 activate node
 node->auth:token \nin header
+deactivate node
 activate auth
 auth->am:token\nto validate
+deactivate auth
 activate am
-am->am:decode token
-am->am:verify expire-time
-am->tm:prime-token
+am->tm:primary-token
 activate tm
 tm-->am:token info
 deactivate tm
+am->am:decode token\nto user.id
+am->am:verify expiry-date
+am->um:user.id\nto verify
+activate um
+um-->am:user info
+deactivate um
 am->sling:sling.token\nto verify
 activate sling
-sling-->am:done
-deactivate sling
-am-->auth:done
+alt valid
+  sling-->am:done
+  deactivate sling
+else expire
+  sling-->am:expire
+  am->sling:sling.email, sling.password\nfrom user info\nto login
+  sling-->am:token
+  am->tm:sling.toke\nupdate
+  activate tm
+  tm-->am:done
+  deactivate tm
+end
+am-->auth:user info with sling.token
+activate auth
 deactivate am
-auth->node:done
+auth->node:user info\nsling.token
+activate node
 deactivate auth
 node->api:request
+deactivate node
 activate api
 api->api:create request\nwith sling.token
 api->sling:request
@@ -43,7 +59,10 @@ sling->api:response
 deactivate sling
 api-->node:response
 deactivate api
+activate node
 node-->br:response
 deactivate br
 deactivate node
+
+
 

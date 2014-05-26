@@ -28,7 +28,6 @@ fs.readdirSync(modelsPath).forEach(function (file) {
 
 // Setup Express
 var app = express();
-app.config = config;
 require('./lib/config/express')(app);
 
 // Start server

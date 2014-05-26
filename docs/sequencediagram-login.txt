@@ -2,16 +2,12 @@ title login request
 
 participant Browser as br
 participant "nodejs\nServer" as node
-participant "users\ncontroller" as uc
 participant "session\ncontroller" as sc
-participant "api\ncontroller" as ac
 participant  "account\nmanager" as am
 participant  "user model\non MongoDB" as um
 participant  "token model\non MongoDB" as tm
 participant "Sling server" as sling
 
-
-note over br,sling: login
 
 br->node: email, password\npost to /api/session
 activate br
@@ -26,19 +22,21 @@ am->um:email, password
 activate um
 um-->am:user info
 deactivate um
-am->am:create token\nwith expire-time
-am->sling:sling.id from user info\nrequest token
+am->sling:sling.email,sling.password from user info\nto login
 activate sling
 sling-->am:sling.token
 deactivate sling
-am->tm:prime-token,expire-time,sling.token\nsave
+am->am:create primary-token\nwith expiry-date
+am->tm:primary-token,expiry-date,sling.token\nsave
 activate tm
 tm-->am:done
 deactivate tm
-am-->uc:user info with prime-token
+am-->sc:user info with primary-token
 deactivate am
-uc-->node:user info\nprime-token
-deactivate uc
-node-->br:user info\nprime-token
+activate sc
+sc-->node:user info\nprimary-token
+activate node
+deactivate sc
+node-->br:user info\nprimary-token
 deactivate node
 deactivate br

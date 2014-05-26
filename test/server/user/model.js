@@ -1,7 +1,6 @@
 'use strict';
 
-var should = require('should'),
-    mongoose = require('mongoose'),
+var should = require('should'),mongoose = require('mongoose'),
     User = mongoose.model('User');
 
 var user;
@@ -9,8 +8,6 @@ var user;
 describe('User Model', function() {
   before(function(done) {
     user = new User({
-      provider: 'local',
-      name: 'Fake User',
       email: 'test@test.com',
       password: 'password'
     });
@@ -25,12 +22,12 @@ describe('User Model', function() {
     done();
   });
 
-  it('should begin with no users', function(done) {
-    User.find({}, function(err, users) {
-      users.should.have.length(0);
-      done();
-    });
-  });
+//  it('should begin with no users', function(done) {
+//    User.find({}, function(err, users) {
+//      users.should.have.length(0);
+//      done();
+//    });
+//  });
 
   it('should fail when saving a duplicate user', function(done) {
     user.save();

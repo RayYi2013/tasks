@@ -3,14 +3,12 @@ title setup request
 participant Browser as br
 participant "nodejs\nServer" as node
 participant "users\ncontroller" as uc
-participant "session\ncontroller" as sc
-participant "api\ncontroller" as ac
 participant  "account\nmanager" as am
 participant  "user model\non MongoDB" as um
 participant  "token model\non MongoDB" as tm
 participant "Sling server" as sling
 
-note over br,sling: setup
+
 br->node: email, password\npost to /api/users
 activate br
 activate node
@@ -19,11 +17,12 @@ deactivate node
 activate uc
 uc->am:email, password\nto createAccount
 activate am
-am->sling:email
+am->am:generate random fake\nsling.email, sling.password
+am->sling:sling.email, sling.password
 activate sling
-sling-->am:sling.id
+sling-->am:confirmation
 deactivate sling
-am->um:email, password\nsling.id
+am->um:email, password\nsling.email,sling.password
 activate um
 um-->am:user info
 deactivate um
@@ -31,19 +30,20 @@ am-->uc: user info
 deactivate am
 uc->am:user info
 activate am
-am->am:create token\nwith expire-time
-am->sling:sling.id from user info\nrequest token
+am->am:create primary-token\nwith expiry-date
+am->sling:sling.email, sling.pasword from user info\nto login
 activate sling
 sling-->am:sling.token
 deactivate sling
-am->tm:prime-token,expire-time,sling.token\nsave
+am->tm:primary-token,expiry-date,sling.token\nto save
 activate tm
 tm-->am:done
 deactivate tm
-am-->uc:user info with prime-token
+am-->uc:user info with primary-token
 deactivate am
-uc-->node:user info\nprime-token
+uc-->node:user info\nprimary-token
+activate node
 deactivate uc
-node-->br:user info\nprime-token
+node-->br:user info\nprimary-token
 deactivate node
 deactivate br

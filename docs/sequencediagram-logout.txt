@@ -2,16 +2,12 @@ title logout request
 
 participant Browser as br
 participant "nodejs\nServer" as node
-participant "users\ncontroller" as uc
 participant "session\ncontroller" as sc
-participant "api\ncontroller" as ac
 participant  "account\nmanager" as am
 participant  "user model\non MongoDB" as um
 participant  "token model\non MongoDB" as tm
 participant "Sling server" as sling
 
-
-note over br,sling: logout
 
 br->node: token \nin header
 activate br
@@ -22,7 +18,7 @@ activate sc
 sc->am:token\nto delete
 deactivate sc
 activate am
-am->tm:prime-token\nto delete
+am->tm:primary-token\nto delete
 activate tm
 tm-->am:deleted token info\nwith sling.token
 deactivate tm
