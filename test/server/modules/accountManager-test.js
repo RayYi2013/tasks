@@ -215,7 +215,7 @@ describe('accountManager ', function() {
         });
 
 
-        it.only('return promise with user with renew token info when sling.token exired', function( done ) { // Async test, the lone argument is the complete callback
+        it('return promise with user with renew token info when sling.token exired', function( done ) { // Async test, the lone argument is the complete callback
             var stub = sinon.stub(slingServer, "verifyToken", function(email,password){
                 return Q.fcall(function(){
                     return false;

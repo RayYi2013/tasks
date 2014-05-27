@@ -2,7 +2,7 @@
 
 angular.module('tasksApp')
   .factory('User', function ($resource) {
-    return $resource('/api/users/:id', {
+    return $resource('/users/:id', {
       id: '@id'
     }, { //parameters default
       update: {
