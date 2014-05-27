@@ -1,0 +1,60 @@
+title sign up view
+
+participant "navbar view" as navbar
+participant "ui router" as router
+participant "sign up\nview" as suview
+participant "sign up\ncontroller" as suctrl
+participant "Auth" as auth
+participant  "local storage" as storage
+participant  "rootScope" as root
+participant "user service" as user
+participant  "api user" as api
+
+navbar->router:click signup button\nshref="/signup"
+activate navbar
+activate router
+deactivate navbar
+router->suview:load
+router->suctrl:load
+deactivate router
+activate suview
+activate suctrl
+suview->suview:fill in\email,password
+suview->suctrl:email,password
+suview->suctrl:submit
+deactivate suview
+suctrl->auth:email,password
+activate auth
+auth->user:email,password
+activate user
+user->api:email,password
+activate api
+
+
+
+alt exception
+    api-->user:400+ status with error\n409,email is exist
+    deactivate api
+    user-->auth:error
+    deactivate user
+    auth-->suctrl:error
+    deactivate auth
+    suctrl-->suview:error
+    activate suview
+    deactivate suview
+else create success
+    api-->user:token
+    activate api
+    deactivate api
+    activate user
+    user-->auth:token
+    deactivate user
+    activate auth
+    auth->root:token
+    auth->storage:token
+    auth-->suctrl:done
+    deactivate auth
+    suctrl->router:load workspace
+    deactivate suctrl
+
+end
