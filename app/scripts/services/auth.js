@@ -22,8 +22,8 @@ angular.module('tasksApp')
         return Session.save({
           email: user.email,
           password: user.password
-        }, function(user) {
-          $rootScope.currentUser = user;
+        }, function(token) {
+            $rootScope.token = token.token;
           return cb();
         }, function(err) {
           return cb(err);
@@ -40,7 +40,7 @@ angular.module('tasksApp')
         var cb = callback || angular.noop;
 
         return Session.delete(function() {
-            $rootScope.currentUser = null;
+            $rootScope.token = null;
             return cb();
           },
           function(err) {
@@ -59,9 +59,9 @@ angular.module('tasksApp')
         var cb = callback || angular.noop;
 
         return User.save(user,
-          function(user) {
-            $rootScope.currentUser = user;
-            return cb(user);
+          function(token) {
+            $rootScope.token = token.token;
+            return cb(token);
           },
           function(err) {
             return cb(err);
@@ -94,8 +94,8 @@ angular.module('tasksApp')
        * 
        * @return {Object} user
        */
-      currentUser: function() {
-        return User.get();
+      token: function() {
+        return $rootScope.token;
       },
 
       /**
@@ -104,8 +104,9 @@ angular.module('tasksApp')
        * @return {Boolean}
        */
       isLoggedIn: function() {
-        var user = $rootScope.currentUser;
-        return !!user;
+        var token = $rootScope.token;
+          //console.log(token);
+        return !!token;
       }
     };
   });

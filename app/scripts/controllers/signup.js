@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tasksApp')
-  .controller('SignupCtrl', function ($scope, Auth, $location) {
+  .controller('SignupCtrl', function ($scope, Auth, $state,$location) {
     $scope.user = {};
     $scope.errors = {};
 
@@ -10,13 +10,15 @@ angular.module('tasksApp')
   
       if(form.$valid) {
         Auth.createUser({
-          name: $scope.user.name,
           email: $scope.user.email,
           password: $scope.user.password
         })
-        .then( function() {
+        .then( function(token) {
           // Account created, redirect to home
-          $location.path('workspace');
+          //$location.path('workspace');
+                //$rootScope.apply();
+                //$state.go('root');
+                $state.go('root.workspace');
         })
         .catch( function(err) {
           err = err.data;

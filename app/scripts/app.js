@@ -9,40 +9,80 @@ angular.module('tasksApp', [
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise("/");
-
         $stateProvider
-      .state('main', {
-                url:'/',
-        templateUrl: 'partials/main',
-        controller: 'MainCtrl'
-      })
-      .state('login', {
-                url:'/login',
-        templateUrl: 'partials/login',
-        controller: 'LoginCtrl'
-      })
-      .state('signup', {
-                url:'/signup',
-        templateUrl: 'partials/signup',
-        controller: 'SignupCtrl'
-      })
-        .state('workspace', {
-            url:'/workspace',
-            templateUrl: 'partials/workspace',
-            controller: 'SignupCtrl'
-        })
-      .state('settings', {
-                url:'/settings',
-        templateUrl: 'partials/settings',
-        controller: 'SettingsCtrl',
-        authenticate: true
-      });
-      
+            .state('root',{
+                url: '',
+                abstract: true,
+                views: {
+                    'header': {
+                        templateUrl: 'partials/navbar',
+                        controller: 'NavbarCtrl'
+                    },
+                    'footer':{
+                        templateUrl: 'partials/footer'
+                    }
+                }
+            })
+            .state('root.main', {
+                url: '/',
+                views: {
+                    'container@': {
+                        templateUrl: 'partials/main.html',
+                        controller: 'MainCtrl'
+                    }
+                }
+            })
+            .state('root.login', {
+                url: '/login',
+                views: {
+                    'container@': {
+                        templateUrl: 'partials/login.html',
+                        controller: 'LoginCtrl'
+                    }
+                }
+            })
+            .state('root.signup', {
+                url: '/signup',
+                views: {
+                    'container@': {
+                        templateUrl: 'partials/signup.html',
+                        controller: 'SignupCtrl'
+                    }
+                }
+            })
+            .state('root.settings', {
+                url: '/settings',
+                views: {
+                    'container@': {
+                        templateUrl: 'partials/settings.html',
+                        controller: 'SettingsCtrl'
+                    }
+                },
+                authenticate: true
+            })
+            .state('root.workspace', {
+                url: '/workspace',
+                views: {
+                    'container@': {
+                        templateUrl: 'partials/workspace.html',
+                        controller: 'MainCtrl'
+                    }
+                },
+                authenticate: true
+            });
+
     $locationProvider.html5Mode(true);
       
   })
-    .factory('authHttpResponseInterceptor',['$q','$location',function($q,$location){
+    .factory('authHttpResponseInterceptor',['$q','$location','$rootScope', function($q,$location,$rootScope){
         return {
+            request: function (config) {
+                config.headers = config.headers || {};
+                if ($rootScope.token) {
+                    config.headers.Authorization = 'Bearer ' + $rootScope.token;
+                }
+                return config;
+            },
             response: function(response){
                 if (response.status === 401) {
                     console.log("Response 401");
@@ -70,7 +110,7 @@ angular.module('tasksApp', [
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams){
                 if (toState.authenticate && !Auth.isLoggedIn()) {
-                    $state.transitionTo("login");
+                    $state.go("root.login");
                     event.preventDefault();
                     //$state.go('/login');
                 }

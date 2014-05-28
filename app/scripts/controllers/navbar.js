@@ -10,6 +10,7 @@ angular.module('tasksApp')
       'link': '/settings'
     }];
 
+        $scope.isLoggedIn = Auth.isLoggedIn;
         $scope.login = function(form) {
             $scope.submitted = true;
 
@@ -20,7 +21,7 @@ angular.module('tasksApp')
                 })
                     .then( function() {
                         // Logged in, redirect to home
-                        $state.go('workspace');
+                        $state.go('root.workspace');
                         $scope.menu[0].link = 'workspace';
                     })
                     .catch( function(err) {
