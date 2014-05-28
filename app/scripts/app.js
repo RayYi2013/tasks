@@ -6,75 +6,7 @@ angular.module('tasksApp', [
   'ngSanitize',
   'ui.router'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
-        // For any unmatched url, redirect to /state1
-        $urlRouterProvider.otherwise("/");
-        $stateProvider
-            .state('root',{
-                url: '',
-                abstract: true,
-                views: {
-                    'header': {
-                        templateUrl: 'partials/navbar',
-                        controller: 'NavbarCtrl'
-                    },
-                    'footer':{
-                        templateUrl: 'partials/footer'
-                    }
-                }
-            })
-            .state('root.main', {
-                url: '/',
-                views: {
-                    'container@': {
-                        templateUrl: 'partials/main.html',
-                        controller: 'MainCtrl'
-                    }
-                }
-            })
-            .state('root.login', {
-                url: '/login',
-                views: {
-                    'container@': {
-                        templateUrl: 'partials/login.html',
-                        controller: 'LoginCtrl'
-                    }
-                }
-            })
-            .state('root.signup', {
-                url: '/signup',
-                views: {
-                    'container@': {
-                        templateUrl: 'partials/signup.html',
-                        controller: 'SignupCtrl'
-                    }
-                }
-            })
-            .state('root.settings', {
-                url: '/settings',
-                views: {
-                    'container@': {
-                        templateUrl: 'partials/settings.html',
-                        controller: 'SettingsCtrl'
-                    }
-                },
-                authenticate: true
-            })
-            .state('root.workspace', {
-                url: '/workspace',
-                views: {
-                    'container@': {
-                        templateUrl: 'partials/workspace.html',
-                        controller: 'MainCtrl'
-                    }
-                },
-                authenticate: true
-            });
-
-    $locationProvider.html5Mode(true);
-      
-  })
-    .factory('authHttpResponseInterceptor',['$q','$location','$rootScope', function($q,$location,$rootScope){
+  .factory('authHttpResponseInterceptor',['$q','$location','$rootScope', function($q,$location,$rootScope){
         return {
             request: function (config) {
                 config.headers = config.headers || {};
@@ -111,6 +43,11 @@ angular.module('tasksApp', [
             function(event, toState, toParams, fromState, fromParams){
                 if (toState.authenticate && !Auth.isLoggedIn()) {
                     $state.go("root.login");
+                    event.preventDefault();
+                    //$state.go('/login');
+                }
+                else if (toState.name === 'root.main' && Auth.isLoggedIn()) {
+                    $state.go("root.workspace");
                     event.preventDefault();
                     //$state.go('/login');
                 }

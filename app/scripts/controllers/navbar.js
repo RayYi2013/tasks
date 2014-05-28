@@ -4,32 +4,34 @@ angular.module('tasksApp')
   .controller('NavbarCtrl', function ($scope, $location, $state, Auth) {
     $scope.menu = [{
       'title': 'Home',
-      'link': '/'
+      'link': 'root.main'
     }, {
       'title': 'Settings',
-      'link': '/settings'
+      'link': 'root.settings'
     }];
 
-        $scope.isLoggedIn = Auth.isLoggedIn;
-        $scope.login = function(form) {
-            $scope.submitted = true;
+    $scope.isLoggedIn = Auth.isLoggedIn;
+    $scope.login = function(form) {
+        console.log('login');
+        $scope.submitted = true;
 
-            if(form.$valid) {
-                Auth.login({
-                    email: $scope.user.email,
-                    password: $scope.user.password
+        if(form.$valid) {
+            Auth.login({
+                email: $scope.user.email,
+                password: $scope.user.password
+            })
+                .then( function() {
+                    // Logged in, redirect to home
+                    $state.go('root.workspace');
+                    $scope.menu[0].link = 'workspace';
                 })
-                    .then( function() {
-                        // Logged in, redirect to home
-                        $state.go('root.workspace');
-                        $scope.menu[0].link = 'workspace';
-                    })
-                    .catch( function(err) {
-                        err = err.data;
-                        $scope.errors.other = err.message;
-                    });
-            }
-        };
+                .catch( function(err) {
+                    if(err.status===404) {
+                        alert('invalid login name or password');
+                    }
+                });
+        }
+    };
 
     $scope.logout = function() {
       Auth.logout()

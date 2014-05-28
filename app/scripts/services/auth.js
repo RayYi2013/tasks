@@ -1,12 +1,26 @@
 'use strict';
 
 angular.module('tasksApp')
-  .factory('Auth', function Auth($location, $rootScope, Session, User, $cookieStore) {
+  .factory('Auth', function Auth($location, $rootScope, Session, User, localStorageService) {
     
     // Get currentUser from cookie
-    $rootScope.currentUser = $cookieStore.get('user') || null;
-    $cookieStore.remove('user');
+    var token = localStorageService.get('token');
+    if(token ){
+        $rootScope.token = token;
+        Session.get({},function(){
+            //do nothing
+        }
+        ,function(err){
+                localStorageService.remove('token');
+                $rootScope.token = null;
+            });
+    }
 
+        function saveToken(token){
+            $rootScope.token = token.token;
+            localStorageService.save('token', token.token);
+
+        }
     return {
 
       /**
@@ -23,7 +37,7 @@ angular.module('tasksApp')
           email: user.email,
           password: user.password
         }, function(token) {
-            $rootScope.token = token.token;
+            saveToken(token);
           return cb();
         }, function(err) {
           return cb(err);
@@ -60,7 +74,7 @@ angular.module('tasksApp')
 
         return User.save(user,
           function(token) {
-            $rootScope.token = token.token;
+              saveToken(token);
             return cb(token);
           },
           function(err) {

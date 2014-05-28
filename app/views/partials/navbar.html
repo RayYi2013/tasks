@@ -11,6 +11,7 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
+                <li ng-repeat="item in menu"><a ng-show="isLoggedIn()" ui-sref="{{item.link}}">{{item.title}}</a></li>
                 <li><a ng-show="isLoggedIn()" href="" ng-click="logout()">Logout</a></li>
                 <li><a ng-hide="isLoggedIn()" ui-sref="root.signup">Sign up</a></li>
             </ul>
