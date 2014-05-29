@@ -1,0 +1,39 @@
+title logout view
+
+participant "navbar view" as navbar
+participant "navbar Ctrl" as navctrl
+participant "ui router" as router
+participant "Auth" as auth
+participant  "local storage" as storage
+participant  "rootScope" as root
+participant "session service" as session
+participant  "api session" as api
+
+navbar->navctrl:logout
+activate navbar
+activate navctrl
+deactivate navbar
+navctrl->auth:logout
+activate auth
+deactivate navctrl
+auth->session:logout
+deactivate auth
+activate session
+session->api:logout with\ntoken in header
+activate api
+
+
+
+api-->session:done
+deactivate api
+activate session
+session-->auth:done
+deactivate session
+activate auth
+auth->root:remove token
+auth->storage:remove token
+auth-->navctrl:done
+activate navctrl
+deactivate auth
+navctrl->router:load login view
+deactivate navctrl
