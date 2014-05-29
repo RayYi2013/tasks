@@ -60,10 +60,29 @@ angular.module('tasksApp')
             })
             .state('root.workspace', {
                 url: '/workspace',
+                abstract: true,
                 views: {
                     'container@': {
                         templateUrl: 'partials/workspace.html',
                         controller: 'WorkspaceCtrl'
+                    }
+                },
+                authenticate: true
+            })
+            .state('root.workspace.main', {
+                url: '',
+                views: {
+                    'menu': {
+                        templateUrl: 'partials/workspace/menu.html',
+                        controller: 'WorkspaceMenuCtrl'
+                    },
+                    'list': {
+                        templateUrl: 'partials/workspace/list.html',
+                        controller: 'WorkspaceListCtrl'
+                    },
+                    'main': {
+                        templateUrl: 'partials/workspace/main.html',
+                        controller: 'WorkspaceMainCtrl'
                     }
                 },
                 authenticate: true

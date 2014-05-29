@@ -47,7 +47,7 @@ angular.module('tasksApp', [
                     //$state.go('/login');
                 }
                 else if (toState.name === 'root.main' && Auth.isLoggedIn()) {
-                    $state.go("root.workspace");
+                    $state.go("root.workspace.main");
                     event.preventDefault();
                     //$state.go('/login');
                 }

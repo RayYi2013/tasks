@@ -2,6 +2,10 @@
 
 angular.module('tasksApp')
   .controller('NavbarCtrl', function ($scope, $location, $state, Auth) {
+
+        $scope.user = {};
+        $scope.errors = {};
+
     $scope.menu = [{
       'title': 'Home',
       'link': 'root.main'
@@ -22,7 +26,7 @@ angular.module('tasksApp')
             })
                 .then( function() {
                     // Logged in, redirect to home
-                    $state.go('root.workspace');
+                    $state.go('root.workspace.main');
                     $scope.menu[0].link = 'workspace';
                 })
                 .catch( function(err) {

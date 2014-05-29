@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tasksApp')
-  .controller('SignupCtrl', function ($scope, Auth, $state,$location) {
+  .controller('SignupCtrl', function ($scope, Auth, $state) {
     $scope.user = {};
     $scope.errors = {};
 

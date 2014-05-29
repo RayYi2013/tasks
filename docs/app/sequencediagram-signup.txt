@@ -19,15 +19,15 @@ router->suctrl:load
 deactivate router
 activate suview
 activate suctrl
-suview->suview:fill in\email,password
+suview->suview:fill in\nemail,password
 suview->suctrl:email,password
 suview->suctrl:submit
 deactivate suview
 suctrl->auth:email,password
 activate auth
-auth->user:email,password
+auth->user:email,password\nto create user
 activate user
-user->api:email,password
+user->api:email,password\npost
 activate api
 
 
@@ -41,6 +41,7 @@ alt exception
     deactivate auth
     suctrl-->suview:error
     activate suview
+    suview->suview:show\nerror message
     deactivate suview
 else create success
     api-->user:token
