@@ -55,3 +55,32 @@ angular.module('tasksApp', [
 
 
     });
+
+
+//verify token if there is token in localstorage
+//if verify fail, remove it.
+angular.element(document).ready(function() {
+    var token = JSON.parse(localStorage.getItem('token'));
+    if(token ) {
+        $.ajax({
+            type: 'GET',
+            url: '/session',
+            headers: {
+                "Authorization":'Bearer ' + token
+            }
+        })
+            .then(function() {
+            console.log('call session to verify token: ' + token);
+        })
+            .fail(function() {
+                localStorage.removeItem('token');
+            })
+            .always(function() {
+                angular.bootstrap(document, ['tasksApp']);
+
+            });
+    }
+    else{
+        angular.bootstrap(document, ['tasksApp']);
+    }
+});

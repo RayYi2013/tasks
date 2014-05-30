@@ -7,13 +7,6 @@ angular.module('tasksApp')
     var token = localStorageService.get('token');
     if(token ){
         $rootScope.token = token;
-        Session.get({},function(){
-            //do nothing
-        }
-        ,function(err){
-                localStorageService.remove('token');
-                $rootScope.token = null;
-            });
     }
 
         function saveToken(token){
