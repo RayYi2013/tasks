@@ -9,25 +9,21 @@ angular.module('tasksApp')
             .state('workspace', {
                 url: '/workspace',
                 views: {
-                    '': {
-                        templateUrl: 'partials/workspace.html',
-                        controller: 'WorkspaceCtrl'
-                    },
-                    'menu@': {
+                    'menu': {
                         templateUrl: 'partials/workspace/menu.html',
                         controller: 'WorkspaceMenuCtrl',
                         resolve: {
-                            WorkspaceList: function(WorkspaceAPI) {
+                            List: function(WorkspaceAPI) {
                                 return WorkspaceAPI.query();
                             }
                         }
 
                     },
-                    'list@': {
+                    'list': {
                         templateUrl: 'partials/workspace/list.html',
                         controller: 'WorkspaceListCtrl'
                     },
-                    '': {
+                    'main': {
                         templateUrl: 'partials/workspace/main.html',
                         controller: 'WorkspaceMainCtrl'
                     }

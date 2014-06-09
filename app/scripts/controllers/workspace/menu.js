@@ -4,8 +4,8 @@
 'use strict';
 
 angular.module('tasksApp')
-    .controller('WorkspaceMenuCtrl', function ($scope, User, WorkspaceList) {
-        $scope.list = WorkspaceList;
+    .controller('WorkspaceMenuCtrl', function ($scope, List) {
+        $scope.list = List;
 
         $scope.onClickMenu = function(evt, workspaceId){
 
