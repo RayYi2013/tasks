@@ -1,6 +1,5 @@
 <ul class="nav navbar-nav">
-    <li ><a href="#/View1">View 1</a></li>
-    <li ><a href="#/View1">View 2</a></li>
+    <li ng-repeat="wp in list"><a ng-click="onClickMenu($event,wp.id)">{{wp.name}}</a></li>
     <li ><a href="#/View1">View 3</a></li>
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
