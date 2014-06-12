@@ -59,7 +59,7 @@ angular.module('tasksApp')
                 authenticate: true
             })
             .state('root.workspace', {
-                url: '/workspace',
+                url: '',
                 abstract: true,
                 views: {
                     'container@': {
@@ -68,26 +68,8 @@ angular.module('tasksApp')
                     }
                 },
                 authenticate: true
-            })
-            .state('root.workspace.main', {
-                url: '',
-                views: {
-                    'menu': {
-                        templateUrl: 'partials/workspace/menu.html',
-                        controller: 'WorkspaceMenuCtrl'
-                    },
-                    'list': {
-                        templateUrl: 'partials/workspace/list.html',
-                        controller: 'WorkspaceListCtrl'
-                    },
-                    'main': {
-                        templateUrl: 'partials/workspace/main.html',
-                        controller: 'WorkspaceMainCtrl'
-                    }
-                },
-                authenticate: true
             });
 
         $locationProvider.html5Mode(true);
 
-    })
+    });

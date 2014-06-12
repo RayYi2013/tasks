@@ -8,12 +8,14 @@ angular.module('tasksApp')
         $stateProvider
             .state('workspace', {
                 url: '/workspace',
+//                abstract: true,
+                parent: 'root.workspace',
                 views: {
                     'menu': {
                         templateUrl: 'partials/workspace/menu.html',
                         controller: 'WorkspaceMenuCtrl',
                         resolve: {
-                            List: function(WorkspaceAPI) {
+                            WorkspaceList: function(WorkspaceAPI) {
                                 return WorkspaceAPI.query();
                             }
                         }
@@ -30,15 +32,32 @@ angular.module('tasksApp')
                 },
                 authenticate: true
             })
-            .state('workspace.list', {
-                url: '/workspace',
+            .state('workspace_item', {
+                url: '/workspace/item/:id',
+//                abstract: true,
+                parent: 'root.workspace',
                 views: {
-                    '': {
-                        templateUrl: 'partials/workspace/main.html',
-                        controller: 'WorkspaceMainCtrl'
+                    'menu': {
+                        templateUrl: 'partials/workspace/menu.html',
+                        controller: 'WorkspaceMenuCtrl',
+                        resolve: {
+                            WorkspaceList1: function(WorkspaceAPI) {
+                                return WorkspaceAPI.query();
+                            }
+                        }
+
+                    },
+                    'list': {
+                        templateUrl: 'partials/workspace/list.html',
+                        controller: 'WorkspaceListCtrl'
+                    },
+                    'main': {
+                        templateUrl: 'partials/workspace/main.item.html',
+                        controller: 'WorkspaceMenuCtrl'
+
                     }
                 },
                 authenticate: true
             });
 
-    })
+    });
