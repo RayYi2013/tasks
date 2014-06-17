@@ -28,6 +28,9 @@ angular.module('tasksApp')
                         templateUrl: 'partials/main.html',
                         controller: 'MainCtrl'
                     }
+                },
+                onEnter: function(){
+                    console.log("enter root.main");
                 }
             })
             .state('root.login', {
