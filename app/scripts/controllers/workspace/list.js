@@ -12,54 +12,38 @@
 angular.module('tasksApp')
     .controller('WorkspaceListCtrl', function ($scope, User, $state) {
 
-        //temporary node
-        $scope.temporaryNode = {
-            children: []
+        var num = 1;
+        function getNum() {
+            return num++;
+        }
+
+        $scope.treedata=createSubTree(0);
+        function createSubTree(level) {
+            if (level > 0)
+                return [
+                    { "label" : "Node " + getNum(), "id" : "id", "children": createSubTree(level-1) },
+                    { "label" : "Node " + getNum(), "id" : "id", "children": createSubTree(level-1) },
+                    { "label" : "Node " + getNum(), "id" : "id", "children": createSubTree(level-1) },
+                    { "label" : "Node " + getNum(), "id" : "id", "children": createSubTree(level-1) }
+                ];
+            else
+                return [];
+        }
+
+        var selectedScope;
+        $scope.showSelected = function(scope) {
+            $scope.selected = scope.selectedNode.label;
+            selectedScope  = scope;
+//            alert('select node');
         };
 
-        //test tree model
-        $scope.roleList = [
-            { label : "User", id : "role1", children : [
-                { label : "subUser1", id : "role11", children : [] },
-                { label : "subUser2", id : "role12", children : [
-                    { label : "subUser2-1", id : "role121", children : [
-                        { label : "subUser2-1-1", id : "role1211", children : [] },
-                        { label : "subUser2-1-2", id : "role1212", children : [] }
-                    ]}
-                ]}
-            ]},
-
-            { label : "Admin", id : "role2", children : [] },
-
-            { label : "Guest", id : "role3", children : [] }
-        ];
-
-        $scope.done = function () {
-            /* reset */
-            $scope.mytree.currentNode.selected = undefined;
-            $scope.mytree.currentNode = undefined;
-            $scope.mode = undefined;
+        $scope.addRoot = function() {
+//            alert('add root');
+            $scope.treedata.push({ "label" : "New Node " + getNum(), "id" : "id", "children": [] });
         };
-
-        $scope.addChildDone = function () {
-            /* add child */
-            if( $scope.temporaryNode.id && $scope.temporaryNode.label ) {
-                $scope.mytree.currentNode.children.push( angular.copy($scope.temporaryNode) );
-            }
-
-            /* reset */
-            $scope.temporaryNode.id = "";
-            $scope.temporaryNode.label = "";
-
-            $scope.done();
+        $scope.addChild = function() {
+//            $scope.treedata[0].children.push({ "label" : "New Node " + getNum(), "id" : "id", "children": [] });
+            $scope.node1.children.push({ "label" : "New Node " + getNum(), "id" : "id", "children": [] });
+            selectedScope.selectNodeHead();
         };
-
-        $scope.$watch( 'mytree.currentNode', function( newObj, oldObj ) {
-            if( $scope.mytree && angular.isObject($scope.mytree.currentNode) ) {
-                console.log( 'Node Selected!!' );
-                console.log( $scope.mytree.currentNode );
-                $state.go('user.item');
-            }
-        }, false);
-
     });
