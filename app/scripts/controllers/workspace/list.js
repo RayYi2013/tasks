@@ -11,39 +11,50 @@
 
 angular.module('tasksApp')
     .controller('WorkspaceListCtrl', function ($scope, User, $state) {
+        var tree;
+        $scope.my_data = [{
+            label: 'Languages',
+            children: [{
+                label: 'English',
+                children: [ {label:'US'}]
+            }]
+        },
+            {label: 'Foods',
+            children: [{
+                label: 'China'
+            }]}];
+//        $scope.my_data = [];
+        $scope.my_tree = tree = {};
 
-        var num = 1;
-        function getNum() {
-            return num++;
-        }
-
-        $scope.treedata=createSubTree(0);
-        function createSubTree(level) {
-            if (level > 0)
-                return [
-                    { "label" : "Node " + getNum(), "id" : "id", "children": createSubTree(level-1) },
-                    { "label" : "Node " + getNum(), "id" : "id", "children": createSubTree(level-1) },
-                    { "label" : "Node " + getNum(), "id" : "id", "children": createSubTree(level-1) },
-                    { "label" : "Node " + getNum(), "id" : "id", "children": createSubTree(level-1) }
-                ];
-            else
-                return [];
-        }
-
-        var selectedScope;
-        $scope.showSelected = function(scope) {
-            $scope.selected = scope.selectedNode.label;
-            selectedScope  = scope;
-//            alert('select node');
+        $scope.try_adding_a_branch = function() {
+            var b;
+            b = tree.get_selected_branch();
+            b = tree.add_branch(b, {
+                label: 'New Branch',
+                data: {
+                    something: 42,
+                    "else": 43
+                }
+            });
+            return tree.select_branch(b);
         };
 
-        $scope.addRoot = function() {
-//            alert('add root');
-            $scope.treedata.push({ "label" : "New Node " + getNum(), "id" : "id", "children": [] });
+        $scope.add_project = function() {
+            return tree.add_branch(null, {
+                label: 'New Branch',
+                data: {
+                    something: 42,
+                    "else": 43
+                }
+            });
         };
-        $scope.addChild = function() {
-//            $scope.treedata[0].children.push({ "label" : "New Node " + getNum(), "id" : "id", "children": [] });
-            $scope.node1.children.push({ "label" : "New Node " + getNum(), "id" : "id", "children": [] });
-            selectedScope.selectNodeHead();
+
+        $scope.my_tree_handler = function(branch) {
+            var _ref;
+            $scope.output = "You selected: " + branch.label;
+            if ((_ref = branch.data) != null ? _ref.description : void 0) {
+                return $scope.output += '(' + branch.data.description + ')';
+            }
+            $state.go('user.item');
         };
     });

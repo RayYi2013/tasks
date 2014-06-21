@@ -26,7 +26,7 @@ angular.module('tasksApp')
             })
                 .then( function() {
                     // Logged in, redirect to home
-                    $state.go('user.index');
+                    $state.go('user.item');
                     $scope.menu[0].link = 'workspace';
                 })
                 .catch( function(err) {

@@ -5,7 +5,7 @@ angular.module('tasksApp', [
   'ngResource',
   'ngSanitize',
   'ui.router',
-    'treeControl'
+    'angularBootstrapNavTree'
 ])
   .factory('authHttpResponseInterceptor',['$q','$location','$rootScope', function($q,$location,$rootScope){
         return {
