@@ -10,20 +10,10 @@
 'use strict';
 
 angular.module('tasksApp')
-    .controller('WorkspaceListCtrl', function ($scope, User, $state) {
+    .controller('WorkspaceListCtrl', function ($scope,  $state, WorkspaceAPIResource) {
         var tree;
-        $scope.my_data = [{
-            label: 'Languages',
-            children: [{
-                label: 'English',
-                children: [ {label:'US'}]
-            }]
-        },
-            {label: 'Foods',
-            children: [{
-                label: 'China'
-            }]}];
-//        $scope.my_data = [];
+        $scope.my_data = $scope.projectList;
+
         $scope.my_tree = tree = {};
 
         $scope.try_adding_a_branch = function() {
@@ -39,6 +29,11 @@ angular.module('tasksApp')
             return tree.select_branch(b);
         };
 
+        $scope.$on('new-project', function(event, args) {
+            var b;
+            b = tree.add_branch(null,args);
+        });
+
         $scope.add_project = function() {
             return tree.add_branch(null, {
                 label: 'New Branch',
@@ -49,12 +44,15 @@ angular.module('tasksApp')
             });
         };
 
+
         $scope.my_tree_handler = function(branch) {
             var _ref;
             $scope.output = "You selected: " + branch.label;
             if ((_ref = branch.data) != null ? _ref.description : void 0) {
                 return $scope.output += '(' + branch.data.description + ')';
             }
-            $state.go('user.item');
+            $state.go('workspace.item',{label:branch.label});
         };
+
+
     });

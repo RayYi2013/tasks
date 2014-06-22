@@ -6,6 +6,7 @@
 'use strict';
 
 angular.module('tasksApp')
-    .controller('WorkspaceMainItemCtrl', function ($scope) {
+    .controller('WorkspaceItemCtrl', function ($scope, $stateParams) {
 
+        $scope.label = $stateParams.label;
     });

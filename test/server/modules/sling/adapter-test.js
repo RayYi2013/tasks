@@ -21,9 +21,9 @@ var adapter = require('../../../../lib/modules/sling/adapter.js')(config);
 
 // Now we write specs using the mocha BDD api
 describe('sling adapter ', function() {
-    var testPath = '/apps/test';
+    var testPath = '/data/yisc_sohu_com/www/test6';
 
-    describe.only('#createNode then get', function() {
+    describe('#createNode then get', function() {
 
         it('return promise with response', function( done ) { // Async test, the lone argument is the complete callback
             var prop = {
@@ -44,18 +44,26 @@ describe('sling adapter ', function() {
                     should(res).have.property('jcr:createdBy');
                     res['jcr:createdBy'].should.equal('admin');
                     res['name'].should.equal('test');
-                    return adapter.deleteNode(testPath);
-                })
-                .then(function(res){
-                    res.should.be.ok;
-                    should(res).have.property('status.code');
-                    res['status.code'].should.equal(204);
                 })
                 .fail(function(err){
                     true.should.not.be.ok;
                 })
                 .fin(function(){
-                    done();
+                    setTimeout(function(){
+                        adapter.deleteNode(testPath)
+                            .then(function(res){
+                                res.should.be.ok;
+                                should(res).have.property('status.code');
+                                res['status.code'].should.equal(204);
+                            })
+                            .fail(function(err){
+                                true.should.not.be.ok;
+                            })
+                            .fin(function(){
+                                done();
+                            });
+
+                    }, 1000);
                 });
 
         });

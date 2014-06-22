@@ -3,55 +3,48 @@
  */
 
 angular.module('tasksApp')
-    .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+    .config(function ($stateProvider) {
 
         $stateProvider
-            .state('user', {
-                url: '',
-                parent: 'root.main',
-                abstract: true,
-//                templateUrl: 'partials/workspace/list.html',
-//                controller: 'WorkspaceListCtrl',
-                views: {
-                    'list': {
-                        templateUrl: 'partials/workspace/list.html',
-                        controller: 'WorkspaceListCtrl'
+            .state('workspace', {
+                url: '/workspace',
+//                abstract: true,
+                templateUrl: 'partials/workspace.html',
+                controller: 'WorkspaceCtrl',
+                resolve: {
+//                    WorkspaceAPI: 'WorkspaceAPI',
+                    ProjectList: function(WorkspaceAPIResource) {
+//                        var deferred = $q.defer();
+//
+//                        WorkspaceAPIResource.query(function(data) {
+//                            console.log('resolve');
+//                            deferred.resolve(data);
+//                        }, function(err){
+//                            console.log('reject');
+//                            deferred.reject();
+//                        });
+//
+//                        return deferred.promise;
+                        return WorkspaceAPIResource.query().$promise;
                     }
                 },
+                authenticate: true
+            })
+            .state('workspace.new', {
+                url: '/new',
+                templateUrl: 'partials/workspace/new.html',
+                controller: 'WorkspaceNewCtrl',
                 onEnter: function(){
                     console.log("enter user");
                 },
                 authenticate: true
             })
-            .state('user.index', {
-                url: 'index',
-//                abstract: true,
-//                templateUrl: 'partials/workspace/list.html',
-//                controller: 'WorkspaceListCtrl',
-                views: {
-                    'main@root.main': {
-                        templateUrl: 'partials/workspace/main.html',
-                        controller: 'WorkspaceMainCtrl'
-                    }
-                },
+            .state('workspace.item', {
+                url: '/item/:label',
+                templateUrl: 'partials/workspace/item.html',
+                controller: 'WorkspaceItemCtrl',
                 onEnter: function(){
-                    console.log("enter user.index");
-                },
-                authenticate: true
-            })
-            .state('user.item', {
-                url: 'item',
-//                abstract: true,
-//                templateUrl: 'partials/workspace/list.html',
-//                controller: 'WorkspaceListCtrl',
-                views: {
-                    'main@root.main': {
-                        templateUrl: 'partials/workspace/item.html',
-                        controller: 'WorkspaceMainCtrl'
-                    }
-                },
-                onEnter: function(){
-                    console.log("enter user.item");
+                    console.log("enter user");
                 },
                 authenticate: true
             });

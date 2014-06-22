@@ -8,70 +8,35 @@ angular.module('tasksApp')
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise("/");
         $stateProvider
-            .state('root',{
-                url: '',
-                abstract: true,
-                views: {
-                    'header': {
-                        templateUrl: 'partials/navbar',
-                        controller: 'NavbarCtrl'
-                    },
-                    'footer':{
-                        templateUrl: 'partials/footer'
-                    }
-                }
-            })
-            .state('root.main', {
+            .state('main', {
                 url: '/',
-                views: {
-                    'container@': {
-                        templateUrl: 'partials/main.html',
-                        controller: 'MainCtrl'
-                    }
-                },
+                templateUrl: 'partials/main.html',
+                controller: 'MainCtrl',
                 onEnter: function(){
                     console.log("enter root.main");
                 }
             })
-            .state('root.login', {
+            .state('login', {
                 url: '/login',
-                views: {
-                    'container@': {
-                        templateUrl: 'partials/login.html',
-                        controller: 'LoginCtrl'
-                    }
-                }
+                templateUrl: 'partials/login.html',
+                controller: 'LoginCtrl'
             })
-            .state('root.signup', {
+            .state('signup', {
                 url: '/signup',
-                views: {
-                    'container@': {
-                        templateUrl: 'partials/signup.html',
-                        controller: 'SignupCtrl'
-                    }
-                }
-            })
-            .state('root.settings', {
-                url: '/settings',
-                views: {
-                    'container@': {
-                        templateUrl: 'partials/settings.html',
-                        controller: 'SettingsCtrl'
-                    }
-                },
-                authenticate: true
-            })
-            .state('root.workspace', {
-                url: '',
-                abstract: true,
-                views: {
-                    'container@': {
-                        templateUrl: 'partials/workspace.html',
-                        controller: 'WorkspaceCtrl'
-                    }
-                },
-                authenticate: true
+                templateUrl: 'partials/signup.html',
+                controller: 'SignupCtrl'
             });
+//            .state('root.settings', {
+//                url: '/settings',
+//                views: {
+//                    'container@': {
+//                        templateUrl: 'partials/settings.html',
+//                        controller: 'SettingsCtrl'
+//                    }
+//                },
+//                authenticate: true
+//            })
+
 
         $locationProvider.html5Mode(true);
 

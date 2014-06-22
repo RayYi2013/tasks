@@ -411,7 +411,7 @@ module.exports = function (grunt) {
             options: {
                 reporter: 'spec'
             },
-            src: ['test/server/**/*.js']
+            src: ['test/client/**/*.js']
         },
 
         env: {

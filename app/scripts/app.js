@@ -5,7 +5,8 @@ angular.module('tasksApp', [
   'ngResource',
   'ngSanitize',
   'ui.router',
-    'angularBootstrapNavTree'
+    'angularBootstrapNavTree',
+    'nsPopover'
 ])
   .factory('authHttpResponseInterceptor',['$q','$location','$rootScope', function($q,$location,$rootScope){
         return {
@@ -42,17 +43,17 @@ angular.module('tasksApp', [
         // Redirect to login if route requires auth and you're not logged in
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams){
-//                if (toState.authenticate && !Auth.isLoggedIn()) {
-//                    $state.go("root.login");
-//                    event.preventDefault();
-//                    //$state.go('/login');
-//                }
-//                else if (toState.name === 'root.main' && Auth.isLoggedIn()) {
-////                    $state.go("root.workspace.main");
-//                    $state.go("workspace");
-//                    event.preventDefault();
-//                    //$state.go('/login');
-//                }
+                if (toState.authenticate && !Auth.isLoggedIn()) {
+                    $state.go("login");
+                    event.preventDefault();
+                    //$state.go('/login');
+                }
+                else if (toState.name === 'main' && Auth.isLoggedIn()) {
+//                    $state.go("root.workspace.main");
+                    $state.go("workspace");
+                    event.preventDefault();
+                    //$state.go('/login');
+                }
             });
 
 

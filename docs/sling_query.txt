@@ -1,0 +1,12 @@
+query for all decedent nodes:
+request:
+http://centos65-ray.cloudapp.net:8080/content.query.json?queryType=xpath&statement=//data/yisc_sohu_com//*
+
+response:
+[{"name":"www","jcr:path":"/data/yisc_sohu_com/www","jcr:score":1000,"jcr:primaryType":"sling:Folder"},{"name":"test1","jcr:path":"/data/yisc_sohu_com/www/test1","jcr:score":1000,"jcr:primaryType":"sling:Folder"},{"name":"test2","jcr:path":"/data/yisc_sohu_com/www/test2","jcr:score":1000,"jcr:primaryType":"sling:Folder"},{"name":"test4","jcr:path":"/data/yisc_sohu_com/www/test4","jcr:score":1000,"jcr:primaryType":"sling:Folder"},{"name":"test5","jcr:path":"/data/yisc_sohu_com/www/test5","jcr:score":1000,"jcr:primaryType":"sling:Folder"}]
+
+query for single node:
+request:
+http://centos65-ray.cloudapp.net:8080/data/yisc_sohu_com/www/test1.json
+response:
+{"name":"test","jcr:createdBy":"admin","color":"red","jcr:created":"Sat Jun 21 2014 09:52:25 GMT+0000","jcr:primaryType":"sling:Folder"}

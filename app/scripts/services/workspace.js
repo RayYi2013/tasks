@@ -3,6 +3,6 @@
  */
 
 angular.module('tasksApp')
-    .factory('WorkspaceAPI', function ($resource) {
+    .factory('WorkspaceAPIResource', function ($resource) {
         return $resource('/api/workspace/');
     });

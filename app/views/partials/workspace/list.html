@@ -1,5 +1,5 @@
 <div class="button_panel">
-    <input type="button" value="ADD NODE" data-ng-click="addRoot()"  />
+    <input type="button" value="ADD NODE" ui-sref="workspace.new" />
     <input type="button" value="APPEND NODE" data-ng-click="addChild()"  />
 </div>
 
@@ -11,8 +11,27 @@
 
 
 
-<abn-tree tree-data="my_data" tree-control="my_tree" on-select="my_tree_handler(branch)" expand-level="2" initial-selection="Granny Smith"></abn-tree>
+<abn-tree tree-data="my_data" tree-control="my_tree" on-select="my_tree_handler(branch)"  expand-level="2" initial-selection="Granny Smith"></abn-tree>
 
+<script type="text/ng-template" id="popover">
+    <div ng-if="row.branch.data.type=='project'">
+    <ul class="list">
+        <li class="list-item"><a class="pull-right" ui-sref="workspace.new">Add Set</a>Data Sets: 5</li>
+    </ul>
+    <ul class="list">
+        <li class="list-item"><a class="pull-right" ui-sref="workspace.new">Add Tool</a>Tools: 4</li>
+    </ul>
+    <ul class="list">
+        <li class="list-item"><a class="pull-right" ui-sref="workspace.new">Add Model</a>Models: 4</li>
+    </ul>
+    </div>
+
+    <!--<ul ng-if="row.branch.data.title" >-->
+        <!--<li ><a>{{ row.branch.data.title }}</a></li>-->
+        <!--<li ><a>{{ row.branch.data.title }}</a></li>-->
+        <!--<li ><a>{{ row.branch.data.title }}</a></li>-->
+    <!--</ul>-->
+</script>
 
 <div class="panel">
     <div class="panel-body">
@@ -44,10 +63,12 @@
                     <hr>
                     <button ng-click="try_adding_a_branch()" class="btn btn-default btn-sm">Add Branch</button>
                     <button ng-click="add_project()" class="btn btn-default btn-sm">Add Project</button>
+                    <hr>
+                    <button ng-click="my_tree.remove_branch()" class="btn btn-default btn-sm">Remove Branch</button>
                 </td>
                 <tr>
                 <td >
-                    <div style="width:300px" class="alert alert-warning">{{ output }}</div>
+                    <div style="width:300px" ns-popover ns-popover-template="popover" ns-popover-trigger="mouseover" ns-popover-placement="bottom" timeout="0" class="alert alert-warning">{{ output }}</div>
                 </td>
             </tr>
             </tr>
