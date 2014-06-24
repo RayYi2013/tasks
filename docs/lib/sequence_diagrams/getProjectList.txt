@@ -1,0 +1,54 @@
+title get project list request
+
+participant Browser as br
+participant "nodejs\nServer" as node
+participant "authenticate\nmiddleware" as auth
+participant "project\ncontroller" as api
+participant  "account\nmanager" as am
+participant  "user model\non MongoDB" as um
+participant  "token model\non MongoDB" as tm
+participant "Sling adaptor" as sling
+
+
+br->node:request\nwith token
+activate br
+activate node
+note over br,sling:authenticate
+node->auth:token \nin header
+deactivate node
+activate auth
+auth->am:token\nto validate
+deactivate auth
+activate am
+am->tm:primary-token
+activate tm
+tm-->am:token info
+deactivate tm
+am->am:decode token\nto user.id
+am->am:verify expiry-date
+am->um:user.id\nto verify
+activate um
+um-->am:user info
+deactivate um
+am-->auth:user info
+activate auth
+deactivate am
+auth->node:user info
+activate node
+note over br,sling:query sling
+deactivate auth
+node->api:request
+deactivate node
+activate api
+api->api:get root path/nfrom user info
+api->sling:root path
+activate sling
+sling-->api:array of node list
+deactivate sling
+api-->node:array of node list
+deactivate api
+activate node
+node-->br:array of node list
+deactivate br
+deactivate node
+

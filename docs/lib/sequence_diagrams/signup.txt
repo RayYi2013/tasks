@@ -1,0 +1,50 @@
+title signup request
+
+participant Browser as br
+participant "nodejs\nServer" as node
+participant "users\ncontroller" as uc
+participant  "account\nmanager" as am
+participant  "user model\non MongoDB" as um
+participant  "token model\non MongoDB" as tm
+participant "Sling server" as sling
+
+
+br->node: email, password\npost to /api/users
+activate br
+activate node
+node->uc: email, password\npost(users.create)
+deactivate node
+activate uc
+uc->am:email, password\nto createAccount
+activate am
+am->am:generate root path
+am->sling:root path\ncreate root node
+activate sling
+sling-->am:confirmation
+deactivate sling
+am->um:email, password\nsling.root
+activate um
+um-->am:user info
+deactivate um
+am-->uc: user info
+deactivate am
+note over uc,sling:start login
+uc->am:user info
+activate am
+am->um:verify
+activate um
+um-->am:confirm
+deactivate um
+am->am:create primary-token\nwith expiry-date
+am->tm:primary-token,expiry-date\nto save
+activate tm
+tm-->am:done
+deactivate tm
+am-->uc:user info with primary-token
+deactivate am
+uc-->node:user info\nprimary-token
+activate node
+deactivate uc
+node-->br:user info\nprimary-token
+deactivate node
+deactivate br

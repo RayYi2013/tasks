@@ -1,0 +1,7 @@
+1. createNode(path, property)
+    path: path of node to create, sample: /data/yisc_sohu_com
+    property: properties linked with node.
+
+2. getDescendantList(path,deep)
+    path: path of node to create, sample: /data/yisc_sohu_com
+    deep: integer, how many levels return.

@@ -18,7 +18,7 @@ angular.module('tasksApp')
           //$location.path('workspace');
                 //$rootScope.apply();
                 //$state.go('root');
-                $state.go('root.workspace');
+                $state.go('workspace');
         })
         .catch( function(err) {
           err = err.data;

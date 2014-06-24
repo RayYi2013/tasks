@@ -1,0 +1,36 @@
+1. createAccount(email, password)
+    parameter:
+        email: email address
+        password: password
+    description:
+        create root node on sling server for new account,
+        then create new user in db.
+    return user information.
+
+2. login(email, password)
+    parameter:
+        email: email address
+        password: password
+    description:
+        verify email and password in user collection on db,
+        then create new token in token collection on db,
+    return user and token information.
+
+
+3. logout(token)
+    parameter:
+        token: primaryToken
+    description:
+        find token in token collection on db,
+        then delete it from token collection on db,
+    return nothing.
+
+4. verify(token)
+    parameter:
+        token: primaryToken
+    description:
+        find token in token collection on db,
+        then decode token, verify expiry date
+        then find user in user collection on db.
+    return user and token information.
+

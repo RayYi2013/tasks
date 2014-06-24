@@ -1,0 +1,38 @@
+title login request
+
+participant Browser as br
+participant "nodejs\nServer" as node
+participant "session\ncontroller" as sc
+participant  "account\nmanager" as am
+participant  "user model\non MongoDB" as um
+participant  "token model\non MongoDB" as tm
+participant "Sling server" as sling
+
+
+br->node: email, password\npost to /api/session
+activate br
+activate node
+node->sc: email, password\npost(session.login)
+deactivate node
+activate sc
+sc->am:email, password\nto authenticate
+deactivate sc
+activate am
+am->um:email, password
+activate um
+um-->am:user info
+deactivate um
+am->am:create primary-token\nwith expiry-date
+am->tm:primary-token,expiry-date,sling.token\nsave
+activate tm
+tm-->am:done
+deactivate tm
+am-->sc:user info with primary-token
+deactivate am
+activate sc
+sc-->node:user info\nprimary-token
+activate node
+deactivate sc
+node-->br:user info\nprimary-token
+deactivate node
+deactivate br
