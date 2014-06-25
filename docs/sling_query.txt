@@ -10,3 +10,54 @@ request:
 http://centos65-ray.cloudapp.net:8080/data/yisc_sohu_com/www/test1.json
 response:
 {"name":"test","jcr:createdBy":"admin","color":"red","jcr:created":"Sat Jun 21 2014 09:52:25 GMT+0000","jcr:primaryType":"sling:Folder"}
+
+
+query for whole list:
+http://centos65-ray.cloudapp.net:8080/data/yisc_sohu_com.tidy.infinity.json
+
+response:
+{
+  "jcr:createdBy": "admin",
+  "email": "yisc@sohu.com",
+  "jcr:created": "Sat Jun 21 2014 15:52:25 GMT+0000",
+  "jcr:primaryType": "sling:Folder",
+  "www": {
+    "jcr:mixinTypes": ["mix:lockable"],
+    "jcr:createdBy": "admin",
+    "jcr:created": "Sat Jun 21 2014 20:21:52 GMT+0000",
+    "jcr:primaryType": "sling:Folder",
+    "test1": {
+      "jcr:createdBy": "admin",
+      "jcr:created": "Sun Jun 22 2014 04:18:48 GMT+0000",
+      "jcr:primaryType": "sling:Folder",
+      "test2": {
+        "jcr:createdBy": "admin",
+        "jcr:created": "Sun Jun 22 2014 04:18:53 GMT+0000",
+        "jcr:primaryType": "slingevent:Event"
+      }
+    },
+    "test3": {
+      "jcr:createdBy": "admin",
+      "jcr:created": "Sun Jun 22 2014 04:19:01 GMT+0000",
+      "jcr:primaryType": "slingevent:Event"
+    }
+  },
+  "test5": {
+    "description": "test",
+    "name": "test5",
+    "jcr:createdBy": "admin",
+    "tags": "test",
+    "type": "project",
+    "jcr:created": "Sun Jun 22 2014 05:28:43 GMT+0000",
+    "jcr:primaryType": "sling:Folder"
+  },
+  "test 6": {
+    "description": "test",
+    "name": "test 6",
+    "jcr:createdBy": "admin",
+    "tags": "tas",
+    "type": "project",
+    "jcr:created": "Sun Jun 22 2014 05:46:50 GMT+0000",
+    "jcr:primaryType": "sling:Folder"
+  }
+}
