@@ -11,16 +11,20 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'app/bower_components/angular/angular.js',
-      'app/bower_components/angular-mocks/angular-mocks.js',
-      'app/bower_components/angular-resource/angular-resource.js',
-      'app/bower_components/angular-cookies/angular-cookies.js',
-      'app/bower_components/angular-sanitize/angular-sanitize.js',
-      'app/bower_components/angular-route/angular-route.js',
-      'app/scripts/*.js',
-      'app/scripts/**/*.js',
-      'test/client/mock/**/*.js',
-      'test/client/spec/**/*.js'
+        'app/bower_components/jquery/dist/jquery.js',
+        'app/bower_components/angular/angular.js',
+        'app/bower_components/angular-mocks/angular-mocks.js',
+        'app/bower_components/angular-resource/angular-resource.js',
+        'app/bower_components/angular-cookies/angular-cookies.js',
+        'app/bower_components/angular-sanitize/angular-sanitize.js',
+//      'app/bower_components/angular-route/angular-route.js',
+        'app/bower_components/angular-ui-router/release/angular-ui-router.js',
+        'app/bower_components/bootstrap/dist/js/bootstrap.js',
+        'app/bower_components/nsPopover/src/nsPopover.js',
+        'app/scripts/*.js',
+        'app/scripts/**/*.js',
+        'test/client/mock/**/*.js',
+        'test/client/spec/**/*.js'
     ],
 
     // list of files / patterns to exclude

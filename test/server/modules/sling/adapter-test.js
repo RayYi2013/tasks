@@ -44,6 +44,13 @@ describe('sling adapter ', function() {
                     should(res).have.property('jcr:createdBy');
                     res['jcr:createdBy'].should.equal('admin');
                     res['name'].should.equal('test');
+                    return adapter.getDescendantNodeList(testPath);
+                })
+                .then(function(res){
+                    res.should.be.ok;
+                    should(res).have.property('jcr:createdBy');
+                    res['jcr:createdBy'].should.equal('admin');
+                    res['name'].should.equal('test');
                 })
                 .fail(function(err){
                     true.should.not.be.ok;

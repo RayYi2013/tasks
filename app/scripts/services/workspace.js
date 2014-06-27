@@ -4,5 +4,5 @@
 
 angular.module('tasksApp')
     .factory('WorkspaceAPIResource', function ($resource) {
-        return $resource('/api/workspace/');
+        return $resource('/api/workspace/', {}, { query: { isArray: false }});
     });
