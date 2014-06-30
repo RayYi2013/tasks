@@ -6,6 +6,8 @@
 angular.module('tasksApp')
     .factory('AppHelpers', function ($rootScope) {
 
+
+
         function generateProjectTree(data){
             //data sample:
             //[{"name":"www","jcr:path":"/data/yisc_sohu_com/www","jcr:score":1000,"jcr:primaryType":"sling:Folder"},

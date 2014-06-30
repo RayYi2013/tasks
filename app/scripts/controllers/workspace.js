@@ -8,5 +8,5 @@
 angular.module('tasksApp')
     .controller('WorkspaceCtrl', function ($scope, $state, ProjectList,AppHelpers) {
         //$scope.projectList = AppHelpers.generateProjectTree(ProjectList);
-//        $scope.projectList = ProjectList
+        $scope.projectList = ProjectList
     });

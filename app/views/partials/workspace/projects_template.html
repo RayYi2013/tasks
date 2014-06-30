@@ -1,0 +1,27 @@
+<div class="mflow_project" ng-repeat="project in projects">
+    <div class="mflow_project_heading" ng-click="clickProject(project)">
+        <label><span class="glyphicon glyphicon-minus"></span>  {{project.name}} </label>
+    </div>
+    <div class="mflow_project_body" ng-show="project.expand">
+        <div class="mflow_datesets">
+            <label>{{node(project,'datesets').name}}</label>
+        </div>
+        <div class="mflow_tools">
+            <label>{{node(project,'tools').name}}</label>
+        </div>
+
+
+
+        <!--<mflow_models data="node(project,'models')"></mflow_models>-->
+
+        <div class="mflow_model" ng-repeat="model in models(project)">
+            <div class="mflow_model_heading" ng-click="clickModel(project,model)">
+                <label>{{model.name}}</label>
+            </div>
+            <div class="mflow_model_body" ng-show="model.expand">
+                <label ng-repeat="property in nodeList(model,'model property')">{{property.name}}</label>
+            </div>
+        </div>
+
+    </div>
+</div>

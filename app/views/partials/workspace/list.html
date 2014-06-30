@@ -1,66 +1,41 @@
-<div class="list-group">
+<div class="mflow_add_project">
+    <a ui-sref="workspace.new" >+Create New Project</a>
     <!--<span class="input-group-addon">+</span>-->
-    <a href="#" class="list-group-item">+Create New Project</a>
 </div>
 
-<accordion close-others="true">
-    <accordion-group heading="Project 1" >
-        <accordion close-others="true">
-            <accordion-group heading="Data Sets">
-            </accordion-group>
-        </accordion>
-        <accordion close-others="true">
-            <accordion-group heading="Tools">
-            </accordion-group>
-        </accordion>
-        <accordion close-others="true">
-            <accordion-group heading="Model 1">
-                This content is straight in the template.
-            </accordion-group>
-        </accordion>
-        <accordion close-others="true">
-            <accordion-group heading="Model 2">
-                This content is straight in the template.
-            </accordion-group>
-        </accordion>
+<mflow-projects data="projectList" ></mflow-projects>
 
+        <!--<div class="mflow_project">-->
+            <!--<div class="mflow_project_heading">-->
+                <!--<label><span class="glyphicon glyphicon-minus"></span>  Project 1 </label>-->
+            <!--</div>-->
+            <!--<div class="mflow_project_body">-->
+                <!--<div class="mflow_datesets">-->
+                    <!--<label>Date Sets</label>-->
+                <!--</div>-->
+                <!--<div class="mflow_tools">-->
+                    <!--<label>Tools</label>-->
+                <!--</div>-->
+                <!--<div class="mflow_model">-->
+                    <!--<div class="mflow_model_heading">-->
+                        <!--<label>Model 1</label>-->
+                    <!--</div>-->
+                    <!--<div class="mflow_model_body">-->
+                        <!--<label>Boundary Conditions</label>-->
+                        <!--<label>Default Properties</label>-->
+                        <!--<label>Property Zones</label>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="mflow_model">-->
+                    <!--<div class="mflow_model_heading">-->
+                        <!--<label>Model 2  ></label>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
 
-    </accordion-group>
-    <accordion-group heading="Second Header.">
-        This content is straight in the template.
-    </accordion-group>
-    <accordion-group heading="Third Header.">
-        This content is straight in the template.
-    </accordion-group>
-</accordion>
-
-
-<ul class="list-group">
-    <li class="list-group-item">Project 1
-        <ul class="list-group">
-            <li class="list-group-item">Data Sets</li>
-            <li class="list-group-item">Tools</li>
-            <li class="list-group-item">Model 1
-                <ul class="list-group">
-                    <li class="list-group-item">Data Sets</li>
-                    <li class="list-group-item">Tools</li>
-                    <li class="list-group-item">Model 1</li>
-                    <li class="list-group-item">Model 2</li>
-                    <li class="list-group-item">Model 3</li>
-                </ul>
-            </li>
-            <li class="list-group-item">Model 2
-                <ul class="list-group">
-                    <li >Data Sets</li>
-                    <li >Tools</li>
-                </ul>
-            </li>
-            <li class="list-group-item">Model 3</li>
-        </ul>
-    </li>
-    <li class="list-group-item">Tools</li>
-    <li class="list-group-item">Model 1</li>
-    <li class="list-group-item">Model 2</li>
-    <li class="list-group-item">Model 3</li>
-</ul>
-
+<!--<div class="mflow_project">-->
+    <!--<div class="mflow_project_heading">-->
+        <!--<label><span class="glyphicon glyphicon-plus"></span>  Project 1 </label>-->
+    <!--</div>-->
+<!--</div>-->

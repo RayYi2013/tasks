@@ -77,3 +77,89 @@ body {
     /*border-bottom: 0;*/
   /*}*/
 /*}*/
+
+.mflow_add_project {
+    width: 100%;
+    background-color: #e36c09;
+    color: #ffffff;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.mflow_project {
+    width: 100%;
+    background-color: #c5d9f0;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.mflow_project_heading {
+    color: #000000;
+    padding-left: 10px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.mflow_project_body {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.mflow_datesets {
+    vertical-align: middle;
+    color: #000000;
+    padding: 0px;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #8eb4e2;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.mflow_tools {
+    vertical-align: middle;
+    color: #000000;
+    margin-bottom: 10px;
+    padding: 0px;
+    width: 100%;
+    background-color: #8eb4e2;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.mflow_model {
+    color: #ffffff;
+    margin-bottom: 10px;
+    padding: 0px;
+    width: 100%;
+    background-color: #8eb4e2;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.mflow_model_heading {
+    vertical-align: middle;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.mflow_model_body {
+    padding-left: 20px;
+    padding-right: 20px;
+    vertical-align: middle;
+}
