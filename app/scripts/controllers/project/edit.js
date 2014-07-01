@@ -2,21 +2,22 @@
  * Created by ray on 2014-06-29.
  */
 
-angular.module('tasksApp')
-    .controller('WorkspaceNewProjectCtrl', function ($scope, $rootScope,$state, WorkspaceAPIResource) {
 
-        $scope.newProject = function(form){
+angular.module('tasksApp')
+    .controller('EditProjectCtrl', function ($scope, $stateParams, ProjectAPIResource) {
+
+        $scope.project = $scope.projectList[$stateParams.name];
+
+        $scope.saveProject = function(form){
             if(form.$valid) {
                 var data = { type: 'project',
                         name: $scope.name,
                         description: $scope.description,
                         tags: $scope.tags,
-                    expend: true},
-                    res = new WorkspaceAPIResource(data);
+                        expend: true},
+                    res = new ProjectAPIResource(data);
 
-//                $rootScope.$broadcast('new-project',data);
-                $scope.projectList[name.replace(/[^\w]/gi, '_')] = data;
-                $state.go('workspace', {}, {reload:true});
+                $rootScope.$broadcast('save-project',data);
 //                res.$save()
 //                    .then(function(res)  {
 //                        var b = {
@@ -33,5 +34,5 @@ angular.module('tasksApp')
 
         };
 
-
     });
+

@@ -10,7 +10,7 @@ angular.module('tasksApp')
             restrict: 'E',
             replace: true,
 
-            templateUrl: 'partials/workspace/projects_template.html',
+            templateUrl: 'partials/project/projects_template.html',
 //            template:'<div class="mflow_project" ng-repeat="project in projects"></div>',
             scope: {
                 data: '='
@@ -77,7 +77,7 @@ angular.module('tasksApp')
                         }
                     });
 
-                    $state.go('workspace.project', {name:_key});
+                    $state.go('project.edit', {name:_key});
 
 
                 };

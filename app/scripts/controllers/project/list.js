@@ -10,7 +10,7 @@
 'use strict';
 
 angular.module('tasksApp')
-    .controller('WorkspaceListCtrl', function ($scope,  $state) {
+    .controller('WorkspaceListCtrl', function ($scope,  $state, $stateParams) {
         var tree;
 //        $scope.my_data = $scope.projectList;
 

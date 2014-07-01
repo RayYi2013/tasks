@@ -1,28 +1,25 @@
 /**
- * Created by RYi on 5/28/2014.
+ * Created by ray on 2014-06-29.
  */
 
-'use strict';
-
 angular.module('tasksApp')
-    .controller('WorkspaceNewCtrl', function ($scope, $rootScope,$state, WorkspaceAPIResource) {
+    .controller('NewProjectCtrl', function ($scope, $rootScope,$state, ProjectAPIResource) {
 
         $scope.newProject = function(form){
             if(form.$valid) {
                 var data = { type: 'project',
                         name: $scope.name,
                         description: $scope.description,
-                        tags: $scope.tags},
-                    res = new WorkspaceAPIResource(data);
+                        tags: $scope.tags,
+                        expend: true},
+                    res = new ProjectAPIResource(data);
+
+//                $rootScope.$broadcast('new-project',data);
+//                $scope.projectList[name.replace(/[^\w]/gi, '_')] = data;
 
                 res.$save()
                     .then(function(res)  {
-                        var b = {
-                            label: $scope.name,
-                            data: data
-                        };
-                        $rootScope.$broadcast('new-project',b);
-                        $state.go('workspace.item',{label:b.label});
+                        $state.go('project.edit', {name:$scope.name.replace(/[^\w]/gi, '_')}, {reload:true});
                     })
                     .catch(function(req) { console.log("error saving obj"); })
                     .finally(function()  { console.log("always called") });

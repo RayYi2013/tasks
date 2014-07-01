@@ -6,7 +6,7 @@
 'use strict';
 
 angular.module('tasksApp')
-    .controller('WorkspaceCtrl', function ($scope, $state, ProjectList,AppHelpers) {
+    .controller('ProjectCtrl', function ($scope, $state, ProjectList) {
         //$scope.projectList = AppHelpers.generateProjectTree(ProjectList);
         $scope.projectList = ProjectList
     });
